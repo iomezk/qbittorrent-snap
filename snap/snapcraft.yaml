@@ -43,6 +43,15 @@ parts:
     after:
       - libtorrent
 
+  local:
+    plugin: dump
+    source: snap/local/
+  qt5-gtk-platform:
+    plugin: nil
+    stage-packages:
+      - qt5-gtk-platformtheme
+    prime:
+      - '**/libqgtk3.so'
   libtorrent:
     plugin: cmake
     build-packages:
@@ -62,7 +71,7 @@ apps:
   qbittorrent:
     extensions:
       - kde-neon
-    command: bin/qbittorrent
+    command: bin/wrapper
     desktop: share/applications/org.qbittorrent.qBittorrent.desktop
     plugs:
       - home
@@ -77,5 +86,13 @@ apps:
       - network-control
 
 plugs:
+  gnome-42-2204:
+    interface: content
+    target: $SNAP/gnome-platform
+    default-provider: gnome-42-2204
+  gtk-3-themes:
+    interface: content
+    target: $SNAP/data-dir/themes
+    default-provider: gtk-common-themes
   desktop:
     mount-host-font-cache: false
